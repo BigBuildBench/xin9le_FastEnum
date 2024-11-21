@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>FastEnumUtility.UnitTests</RootNamespace>
+        <IsPackable>false</IsPackable>
+        <IsTestProject>true</IsTestProject>
+    </PropertyGroup>
+
+    <!-- T4 Template -->
+    <ItemGroup>
+        <Compile Update="Cases\Generators\BasicTests.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>BasicTests.tt</DependentUpon>
+        </Compile>
+        <Compile Update="Cases\Reflections\BasicTests.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>BasicTests.tt</DependentUpon>
+        </Compile>
+        <None Update="Cases\Generators\BasicTests.tt">
+            <LastGenOutput>BasicTests.cs</LastGenOutput>
+            <Generator>TextTemplatingFileGenerator</Generator>
+        </None>
+        <None Update="Cases\Reflections\BasicTests.tt">
+            <LastGenOutput>BasicTests.cs</LastGenOutput>
+            <Generator>TextTemplatingFileGenerator</Generator>
+        </None>
+        <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+    </ItemGroup>
+
+</Project>

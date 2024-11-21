@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+
+name: Unit Testing
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  BuildConfiguration: Release
+  CheckoutDirectory: checkout
+  ProjectName: FastEnum.UnitTests
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+        - DotnetVersion: 8.0.x
+          Tfm: net8.0
+
+    steps:
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.DotnetVersion }}
+
+      - name: Display .NET version
+        run: dotnet --version
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ${{ env.CheckoutDirectory }}
+          fetch-depth: 0
+
+      - name: Test
+        run: dotnet test --verbosity normal --configuration ${{ env.BuildConfiguration }} --framework ${{ matrix.Tfm }} ./${{ env.CheckoutDirectory }}/src/insights/${{ env.ProjectName }}/${{ env.ProjectName }}.csproj
